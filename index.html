@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дні до Дня народження</title>
+    <style>
+        /* Основний стиль сторінки */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffd180, #ffab40);
+            color: #333;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        
+        /* Контейнер */
+        .container {
+            text-align: center;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+            max-width: 450px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #d84315;
+            font-size: 1.8em;
+        }
+
+        /* Стилізація кнопки */
+        .button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #ff7043;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .button:hover {
+            background-color: #ff5722;
+        }
+        
+        /* Стилізація результату */
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+            font-weight: bold;
+            background-color: #ffe0b2;
+            padding: 15px;
+            border-radius: 8px;
+        }
+    </style>
+</head>	
+<body>
+    <div class="container">
+        <h1>Час до Дня народження</h1>
+        <p>Введіть поточну дату і дату вашого дня народження:</p>
+
+        <!-- Введення дати -->
+        <label for="currentDate">Поточна дата:</label>
+        <input type="date" id="currentDate"><br><br>
+        
+        <label for="birthdayDate">Дата вашого дня народження:</label>
+        <input type="date" id="birthdayDate"><br><br>
+
+        <!-- Кнопка для розрахунку -->
+        <button class="button" onclick="calculateDaysUntilBirthday()">Розрахувати дні</button>
+
+        <!-- Результат -->
+        <div class="result" id="result">Результат з’явиться тут</div>
+    </div>
+
+    <script>
+        function calculateDaysUntilBirthday() {
+            // Отримуємо введені дати
+            const currentDateInput = document.getElementById("currentDate").value;
+            const birthdayDateInput = document.getElementById("birthdayDate").value;
+
+            if (!currentDateInput || !birthdayDateInput) {
+                document.getElementById("result").innerText = "Будь ласка, введіть обидві дати.";
+                return;
+            }
+
+            const today = new Date(currentDateInput);
+            const birthday = new Date(today.getFullYear(), new Date(birthdayDateInput).getMonth(), new Date(birthdayDateInput).getDate());
+
+            // Якщо день народження вже був цього року, додаємо один рік
+            if (today > birthday) {
+                birthday.setFullYear(today.getFullYear() + 1);
+            }
+
+            // Розрахунок днів до дня народження
+            const day = 86400000;  // Кількість мілісекунд у дні
+            const daysUntilBirthday = Math.ceil((birthday.getTime() - today.getTime()) / day);
+
+            // Відображення результату
+            const resultText = daysUntilBirthday + " днів до вашого дня народження!";
+            document.getElementById("result").innerText = resultText;
+        }
+    </script>
+</body>
+</html>
